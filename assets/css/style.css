@@ -1,0 +1,63 @@
+body{
+	background-image: url("../images/background.png");
+	background-size: cover;
+}
+
+@font-face {
+    font-family: 'murder';
+    src: url("../fonts/murder.otf") ;
+}
+
+#title{
+	font-family: 'murder';
+	text-align: center;
+	font-size: 140px;
+	color: rgba(228, 204, 204, 0.99);
+	margin-bottom: -15px;
+	margin-top: 0;
+}
+
+#subtitle{
+	margin-top: 0;
+	font-family: 'murder';
+	text-align: center;
+	font-size: 72px;
+	color: rgba(228, 204, 204, 0.99);
+}
+	 
+.score-text{
+	font-family: 'murder';
+	text-align: center;
+	color: rgba(228, 204, 204, 0.99);
+	line-height: 1.5em;
+    font-size: 28px;
+    margin-bottom: 0;
+    margin-top: 5px;
+}
+
+.inner{
+	border: 3px dashed white;
+	height: 500px;
+	background-color: #000;
+	/*z-index: 1;*/
+}
+
+h3{
+	text-align: center;
+	margin-bottom: 0;
+}
+
+#noose{
+	
+	display: none;
+}
+
+.nooseend{
+	animation: fadein 4s;
+	width: 100%;
+}
+
+@keyframes fadein{
+	from{opacity: 0;}
+	to{opacity: 1;}
+}

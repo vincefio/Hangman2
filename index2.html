@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hangman</title>
+
+	<link rel="stylesheet" href="assets/css/style.css">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h1 id="title">Hangman</h1>
+		<h2 id="subtitle">HORROR FILM EDITION</h2>
+
+		<div class="row">
+			<div class="col-xs-2 outer">
+			</div>
+			<div class="col-xs-4 inner">
+				<img id="noose" src="assets/images/noose.jpg" alt="noose">
+			</div>
+			<div class="col-xs-4 inner">
+				<h3 class="score-text">PRESS ANY KEY TO GET STARTED!</h3>
+				<h3 class="score-text">WINS</h3>
+				<p class="score-text" id="divNumWins"></p>
+				<h3 class="score-text">CURRENT MOVIE</h3>
+				<p class="score-text" id="divCurrentWord"></p>
+				<h3 class="score-text"># OF GUESSES REMAINING</h3>
+				<p class="score-text" id="divNumGuesses"></p>
+				<h3 class="score-text">LETTERS ALREADY GUESSED</h3>
+				<p class="score-text" id="divLettersGuessed" ></p>
+			</div>
+			<div class="col-xs-2 outer">
+			</div>
+		</div>
+
+	</div>
+
+	<script>
+	//array of all films
+	var films = ['night of the living dead', 'the silence of the lambs', 'halloween', 'dracula', 'the exorcist', 'the conjuring', 'scream', 'dawn of the dead', 'the shining'];
+
+	//set variables for score-keeping
+	var wins = 0;
+	//var randomNum;
+	var randomFilm;
+	var filmLetterArray = [];
+	var stringRandomFilm = '';
+	var guessRemaining = 12;
+	//variables dealing wiith createFilmString and refresh
+	//var filmRefresh;
+	var lettersGuessed = '';
+	
+	screenReset();
+	console.log(randomFilm); //-works
+	createFilmString();
+	//console.log(stringRandomFilm); //-works
+
+
+	function screenReset(){
+		//every time the key is pressed what happens, and before the game starts
+		//get random film, part of game reset
+		randomFilm = films[Math.floor(Math.random()*9)];
+		//reset the <h3> divs on the page
+		document.querySelector('#divNumWins').innerHTML = wins;
+		document.querySelector('#divCurrentWord').innerHTML = stringRandomFilm;
+		document.querySelector('#divNumGuesses').innerHTML = guessRemaining;
+		document.querySelector('#divLettersGuessed').innerHTML = lettersGuessed;
+	}
+
+	//create an array and a string with each letter from randomFilm
+	function createFilmString(){
+		for(var i = 0; i < randomFilm.length; i++){
+			if(randomFilm.charAt(i) == ' '){
+				filmLetterArray.push(" ");
+				stringRandomFilm += "&nbsp;&nbsp;";  //&nbsp means non-breaking space
+			}else{
+				filmLetterArray.push("_")
+				stringRandomFilm += "_ ";
+			}
+		}
+	}
+	
+	</script>
+	<script
+  	src="http://code.jquery.com/jquery-3.2.1.min.js"
+  	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  	crossorigin="anonymous"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	
+</body>
+</html>

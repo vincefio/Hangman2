@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hangman</title>
+
+	<link rel="stylesheet" href="assets/css/style.css">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h1 id="title">Hangman</h1>
+		<h2 id="subtitle">HORROR FILM EDITION</h2>
+
+		<div class="row">
+			<div class="col-xs-2 outer">
+			</div>
+			<div class="col-xs-4 inner">
+				<img id="noose" src="assets/images/noose.jpg" alt="noose">
+			</div>
+			<div class="col-xs-4 inner">
+				<h3 class="score-text">PRESS ANY KEY TO GET STARTED!</h3>
+				<h3 class="score-text">WINS</h3>
+				<p class="score-text" id="numWins"></p>
+				<h3 class="score-text">CURRENT MOVIE</h3>
+				<p class="score-text" id="currentWord"></p>
+				<h3 class="score-text"># OF GUESSES REMAINING</h3>
+				<p class="score-text" id="numGuesses"></p>
+				<h3 class="score-text">LETTERS ALREADY GUESSED</h3>
+				<p id="plettersGuessed" class="score-text"></p>
+			</div>
+			<div class="col-xs-2 outer">
+			</div>
+		</div>
+
+	</div>
+
+	<script>
+	//array of all films
+	var films = ['night of the living dead', 'the silence of the lambs', 'halloween', 'dracula', 'the exorcist', 'the conjuring', 'scream', 'dawn of the dead', 'the shining'];
+
+	//set variables for score-keeping
+	var guessLetterArray = [];
+	var winsStart = -1;
+	var randomNum;
+	var randomFilm;
+	var guessRemaining = 15;
+	
+	var guessSpace = [];
+
+
+	alert("Press Ok to Get Started!");
+	
+
+	gameRestart();
+		
+		document.onkeyup = function(event){
+
+
+			
+			//for loop to add letters to the blank spaces based on guess
+			for(var i = 0; i < randomFilm.length; i++){
+				if(event.key === randomFilm.charAt(i)){
+					guessSpace[i] = event.key;
+				}
+			}
+
+			letterSpaces = updateCurrentWord();
+
+			//place already guessed letters into their p tag, don't allow them to be guessed again, make alerts for wins and losse
+			guessLetterArray.push(event.key);
+			var guessedLetter = document.getElementById('plettersGuessed');
+			guessedLetter.innerHTML = guessLetterArray;
+
+			
+			
+			//with each key press lower the guessRemaining variable
+			guessRemaining--;
+			guessLeft = document.getElementById('numGuesses');
+			guessLeft.innerHTML = guessRemaining;
+
+			//set statement for when guesses=0 and player loses
+			// if(guessRemaining === 0)
+			
+			var guessReplace = document.getElementById('currentWord');
+			guessReplace.innerHTML = letterSpaces;
+
+				//use the indexOf property to check the letterSpaces keyword for _
+			if(letterSpaces.indexOf('_ ') < 0){
+				console.log('You won');
+				//guessLetterArray.length = 0;
+				gameRestart();
+
+			}
+
+			//set an if statement for a loss
+			if(guessRemaining === 0 && letterSpaces.indexOf('_ ') >= 0){
+				//document.getElementById("noose").addClass('nooseend');
+				console.log('You Lose');
+			}
+
+		};
+
+
+	
+	//function to reset game
+
+	function gameRestart(){
+
+		randomNum = Math.floor(Math.random()*9);
+	    randomFilm= films[randomNum];
+	    console.log(randomFilm);
+
+	    var letterSpaces = '';
+	    guessSpace = [];
+		//create an array with all of the film letters
+		for(var i = 0; i < randomFilm.length; i++){
+			
+			if(randomFilm.charAt(i) === ' '){
+				letterSpaces += "&nbsp; &nbsp;";
+				guessSpace.push(" ");
+			}else{
+				letterSpaces += '_ ';
+				guessSpace.push("_");
+			}
+
+		}
+
+		winsStart++;
+
+		guessRemaining = 15;
+
+		//var guessedLetter = [];
+		guessLetterArray.length = 0;
+		guessedLetter = document.getElementById('plettersGuessed');
+		guessedLetter.innerHTML = guessLetterArray;
+		//below variables set up starting numbers
+		var wordSpaces = document.getElementById('currentWord');
+		wordSpaces.innerHTML = letterSpaces;
+
+		var wins = document.getElementById('numWins');
+		wins.innerHTML = winsStart;
+
+		var guessLeft = document.getElementById('numGuesses');
+		guessLeft.innerHTML = guessRemaining;
+
+	}
+
+
+
+	function updateCurrentWord(){
+		letterSpaces = "";
+
+		for(var i = 0; i < guessSpace.length; i++){
+			//below code doesn't add spaces into movie title like i wanted it to
+			if(guessSpace[i] === ' '){
+				letterSpaces += "&nbsp; &nbsp;";
+			}
+			else if(guessSpace[i] == '_') {
+				letterSpaces += '_ ';
+			}
+			else{
+				letterSpaces += guessSpace[i];
+			}
+		}
+
+		return letterSpaces;
+	} 
+	
+	//on the guess, see if any letters match, lower guess remaining by 1, put letter already guessed on bottom
+
+
+	</script>
+	<script
+  	src="http://code.jquery.com/jquery-3.2.1.min.js"
+  	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  	crossorigin="anonymous"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	
+</body>
+</html>
